@@ -3,6 +3,7 @@ import pandas as pd
 import altair as alt
 from agent import ResearchMemoryAgent
 from snowflake_client import SnowflakeClient
+from project_store import ProjectStore
 
 st.set_page_config(page_title="Research Memory Assistant", layout="wide")
 
@@ -12,52 +13,90 @@ def format_usd(value: float) -> str:
 if "agent" not in st.session_state:
     st.session_state.agent = ResearchMemoryAgent()
     st.session_state.analytics_client = SnowflakeClient()
+    st.session_state.project_store = ProjectStore()
 
 st.title("📚 Research Memory Assistant")
-st.markdown("### A demo UI for EverOS memory, Gemini insights, and Snowflake token analytics.")
+st.markdown("### A project-based research workspace for ingesting arXiv papers into EverOS memory.")
 
-tabs = st.tabs(["💬 Research Assistant", "⚡ Token Economy Comparison", "📊 Snowflake Token Analytics Dashboard"])
+tabs = st.tabs(["🧠 Project Workspace", "⚡ Token Economy Comparison", "📊 Snowflake Token Analytics Dashboard"])
 
 with tabs[0]:
-    st.subheader("Research Assistant")
+    st.subheader("Project Setup")
     user_id = st.text_input("User ID", value="demo_user_1")
-    query = st.text_area("Research query", value="How can I speed up transformer KV-cache decoding in PyTorch?", height=130)
-    enable_memory = st.checkbox("Enable EverOS Memory Context", value=True)
+    project_title = st.text_input("Project title", value="Interpretability research sprint")
+    research_area = st.text_area("Research area", value="sparse autoencoders for interpretability", height=80)
+    arxiv_input = st.text_area("arXiv links or IDs", value="https://arxiv.org/abs/2401.12345\n2401.67890", height=100)
 
-    if st.button("Search & Explain"):
-        with st.spinner("Running query with Gemini and EverOS..."):
-            result = st.session_state.agent.run_query(query, user_id=user_id, enable_memory=enable_memory)
-
-        if result.get("error"):
-            st.error(result["error"])
+    if st.button("Create Project & Ingest Papers"):
+        if not project_title.strip() or not research_area.strip() or not arxiv_input.strip():
+            st.warning("Please provide a title, research area, and at least one arXiv link or ID.")
         else:
-            if result["memory_saved"]:
-                st.success("✅ New memory was saved to EverOS.")
-            if enable_memory:
-                with st.expander("🧠 Retrieved EverOS Memory Context", expanded=False):
-                    st.write(result.get("memory_context") or "No memory was returned for this query.")
+            parsed_links = st.session_state.project_store.parse_arxiv_links(arxiv_input)
+            if not parsed_links:
+                st.warning("Could not parse any arXiv IDs from the input.")
+            else:
+                project = st.session_state.project_store.create_project(project_title, research_area, parsed_links)
+                st.session_state.current_project_id = project["id"]
+                st.session_state.current_project = project
+                st.success(f"Project created: {project['title']}")
 
-            with st.expander("📄 Referenced arXiv Papers", expanded=True):
-                if result["papers"]:
-                    for paper in result["papers"]:
-                        st.write(f"**{paper['title']}** ({paper['published']})")
-                        st.write(paper['summary'])
-                        st.write(f"[View PDF]({paper['url']})")
-                        st.markdown("---")
-                else:
-                    st.info("No arXiv papers were found for this query.")
+                with st.spinner("Ingesting papers into memory..."):
+                    ingest_result = st.session_state.agent.ingest_project_papers(
+                        project_id=project["id"],
+                        arxiv_ids=parsed_links,
+                        research_area=research_area,
+                        user_id=user_id,
+                    )
 
-            st.markdown("### Gemini Answer")
-            st.write(result["answer"])
+                st.session_state.current_project = ingest_result.get("project", project)
+                st.session_state.project_store.update_project(project["id"], **st.session_state.current_project)
 
-            metrics_col1, metrics_col2, metrics_col3 = st.columns(3)
-            metrics_col1.metric("Prompt Tokens", result["usage"].get("prompt_tokens", 0))
-            metrics_col2.metric("Completion Tokens", result["usage"].get("completion_tokens", 0))
-            metrics_col3.metric("Total Tokens", result["usage"].get("total_tokens", 0))
+                if ingest_result.get("errors"):
+                    st.warning("Some papers could not be ingested:")
+                    for error in ingest_result["errors"]:
+                        st.caption(error)
 
-            cost_col, latency_col = st.columns(2)
-            cost_col.metric("Estimated Cost", format_usd(result.get("cost_usd", 0.0)))
-            latency_col.metric("Latency", f"{result.get('latency_ms', 0.0):.0f} ms")
+                st.session_state.project_ready = True
+
+    if st.session_state.get("current_project"):
+        project = st.session_state.current_project
+        st.markdown("---")
+        st.subheader(f"{project.get('title', 'Project')}")
+        st.caption(f"Research area: {project.get('research_area', '')}")
+
+        if project.get("papers"):
+            st.markdown("### Ingested Papers")
+            for paper in project["papers"]:
+                with st.expander(f"📄 {paper.get('title','Untitled')}", expanded=False):
+                    st.write(f"**Authors:** {', '.join(paper.get('authors', []))}")
+                    st.write(f"**Published:** {paper.get('published', 'Unknown')}")
+                    st.write(f"**Summary:** {paper.get('summary', '')}")
+                    st.write(f"**arXiv:** {paper.get('url', '')}")
+                    if paper.get("abstract"):
+                        st.write(f"**Abstract:** {paper['abstract']}")
+
+        if project.get("suggestions"):
+            st.markdown("### Suggested Related Papers")
+            for suggestion in project["suggestions"]:
+                col1, col2 = st.columns([4, 1])
+                with col1:
+                    st.write(f"**{suggestion.get('title', 'Untitled')}**")
+                    st.write(f"{suggestion.get('authors', [])}")
+                    st.write(suggestion.get('reason', ''))
+                with col2:
+                    if st.button("Add", key=f"add_{suggestion.get('id', '')}"):
+                        with st.spinner("Adding suggested paper..."):
+                            updated = st.session_state.agent.add_related_paper_to_project(
+                                project_id=project["id"],
+                                paper_id=suggestion.get("id"),
+                                user_id=user_id,
+                            )
+                        st.session_state.current_project = updated
+                        st.session_state.project_store.update_project(project["id"], **updated)
+                        st.experimental_rerun()
+
+        if not project.get("papers"):
+            st.info("Create a project and ingest papers to start building the project memory.")
 
 with tabs[1]:
     st.subheader("Token Economy Comparison")
@@ -69,7 +108,11 @@ with tabs[1]:
             compare_result = st.session_state.agent.compare_modes(compare_query, user_id=compare_user_id)
 
         if compare_result.get("baseline", {}).get("error") or compare_result.get("memory", {}).get("error"):
-            st.error("Unable to complete comparison. Please verify your environment and try again.")
+            st.error("Comparison could not complete fully. The agent still returned a response, but one of the runs failed.")
+            if compare_result.get("baseline", {}).get("error"):
+                st.caption(f"Baseline error: {compare_result['baseline']['error']}")
+            if compare_result.get("memory", {}).get("error"):
+                st.caption(f"Memory error: {compare_result['memory']['error']}")
         else:
             left, right = st.columns(2)
             with left:
@@ -93,7 +136,7 @@ with tabs[2]:
     analytics = st.session_state.analytics_client.get_comparison_analytics()
 
     if analytics.get("error"):
-        st.error(analytics["error"])
+        st.warning(analytics["error"])
     else:
         st.metric("Total Queries", analytics.get("total_queries", 0))
         st.metric("Avg Tokens per Query", f"{analytics.get('avg_tokens_per_query', 0.0):.1f}")

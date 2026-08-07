@@ -6,6 +6,12 @@ load_dotenv()
 
 class SnowflakeClient:
     def __init__(self):
+        self.conn = None
+        self.connection_error = None
+        self.table_ready = False
+        self._connect()
+
+    def _connect(self):
         try:
             self.conn = snowflake.connector.connect(
                 user=os.getenv("SNOWFLAKE_USER"),
@@ -13,35 +19,52 @@ class SnowflakeClient:
                 account=os.getenv("SNOWFLAKE_ACCOUNT"),
                 warehouse=os.getenv("SNOWFLAKE_WAREHOUSE"),
                 database=os.getenv("SNOWFLAKE_DATABASE"),
-                schema=os.getenv("SNOWFLAKE_SCHEMA")
+                schema=os.getenv("SNOWFLAKE_SCHEMA"),
+                login_timeout=15,
             )
+            self.connection_error = None
+            self.table_ready = False
             self._create_table_if_not_exists()
         except Exception as e:
-            print(f"Snowflake Connection Failed: {e}")
+            self.connection_error = str(e)
             self.conn = None
+            print(f"Snowflake Connection Failed: {e}")
 
     def _create_table_if_not_exists(self):
         if not self.conn:
             return
         cursor = self.conn.cursor()
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS TOKEN_ECONOMY_LOGS (
-                timestamp TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
-                session_id STRING,
-                query STRING,
-                prompt_tokens INTEGER,
-                completion_tokens INTEGER,
-                total_tokens INTEGER,
-                latency_ms FLOAT,
-                memory_enabled BOOLEAN,
-                estimated_cost_usd FLOAT
-            )
-        """)
-        self.conn.commit()
+        database = os.getenv("SNOWFLAKE_DATABASE", "")
+        schema = os.getenv("SNOWFLAKE_SCHEMA", "")
+
+        try:
+            if database and schema:
+                cursor.execute(f"USE DATABASE {database}")
+                cursor.execute(f"USE SCHEMA {database}.{schema}")
+
+            cursor.execute(f"""
+                CREATE TABLE IF NOT EXISTS {database}.{schema}.TOKEN_ECONOMY_LOGS (
+                    timestamp TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+                    session_id STRING,
+                    query STRING,
+                    prompt_tokens INTEGER,
+                    completion_tokens INTEGER,
+                    total_tokens INTEGER,
+                    latency_ms FLOAT,
+                    memory_enabled BOOLEAN,
+                    estimated_cost_usd FLOAT
+                )
+            """)
+            self.conn.commit()
+            self.table_ready = True
+        except Exception as e:
+            self.connection_error = str(e)
+            self.table_ready = False
+            print(f"Snowflake Table Setup Warning: {e}")
 
     def log_usage(self, session_id, query, tokens, latency_ms, memory_enabled=True):
         """Logs usage metrics to Snowflake."""
-        if not self.conn:
+        if not self.conn or not self.table_ready:
             return
 
         prompt_tokens = tokens.get("prompt_tokens", 0)
@@ -69,7 +92,22 @@ class SnowflakeClient:
     def get_comparison_analytics(self):
         if not self.conn:
             return {
-                "error": "Snowflake connection unavailable.",
+                "error": f"Snowflake analytics are unavailable: {self.connection_error or 'Please verify the Snowflake credentials and schema in your .env file.'}",
+                "total_queries": 0,
+                "avg_tokens_per_query": 0.0,
+                "avg_cost_usd": 0.0,
+                "total_tokens_saved": 0,
+                "baseline_tokens": 0,
+                "memory_tokens": 0,
+                "baseline_cost": 0.0,
+                "memory_cost": 0.0,
+                "baseline_queries": 0,
+                "memory_queries": 0,
+            }
+
+        if not self.table_ready:
+            return {
+                "error": f"Snowflake analytics table is not ready: {self.connection_error or 'Table setup was skipped.'}",
                 "total_queries": 0,
                 "avg_tokens_per_query": 0.0,
                 "avg_cost_usd": 0.0,
@@ -101,7 +139,7 @@ class SnowflakeClient:
             row = (0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0, 0)
 
         total_queries, avg_tokens_per_query, avg_cost_usd, memory_tokens, baseline_tokens, memory_cost, baseline_cost, memory_queries, baseline_queries = row
-        total_tokens_saved = max(0, baseline_tokens - memory_tokens)
+        total_tokens_saved = max(0, int(baseline_tokens or 0) - int(memory_tokens or 0))
 
         return {
             "total_queries": int(total_queries or 0),
