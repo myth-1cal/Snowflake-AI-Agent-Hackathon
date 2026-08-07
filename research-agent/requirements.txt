@@ -1,0 +1,8 @@
+streamlit
+google-generativeai
+everos-cloud
+snowflake-connector-python
+python-dotenv
+arxiv
+pandas
+altair
