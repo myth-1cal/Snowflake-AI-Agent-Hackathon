@@ -190,6 +190,27 @@ class ResearchMemoryAgent:
 
         return suggestions[:3]
 
+    def chat_with_project_knowledge(self, project, user_query, user_id="demo_user_1"):
+        papers = project.get("papers", [])
+        if not papers:
+            return "Add at least one paper to the project before chatting with the knowledge base."
+
+        paper_context = "\n\n".join([
+            f"Paper: {paper.get('title', 'Untitled')}\nAuthors: {', '.join(paper.get('authors', []))}\nSummary: {paper.get('summary', '')}"
+            for paper in papers
+        ])
+        memory_context = self.everos.search_related_memories(user_query, user_id=user_id)
+        prompt = prompts.SYSTEM_PROMPT.format(
+            memory_context=memory_context or "No memory context available.",
+            paper_context=paper_context or "No paper context available."
+        )
+        answer, usage = self.gemini.generate_response(
+            f"Answer the user's question using the project knowledge base below. Keep it concise and cite the papers you use.\n\n{prompt}",
+            user_query,
+        )
+        self.everos.add_turn(user_id, user_query, answer)
+        return answer
+
     def run_query(self, query, user_id="demo_user_1", enable_memory=True):
         start_time = time.time()
         memory_context = ""

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartScholar</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <h1>SmartScholar</h1>
+          <p>Research memory, structured.</p>
+        </div>
+
+        <section class="sidebar-section">
+          <h3>Projects</h3>
+          <div id="project-list" class="project-list"></div>
+        </section>
+      </aside>
+
+      <main class="main-panel">
+        <header class="hero-card">
+          <div>
+            <h2>Create a research workspace</h2>
+            <p>Ingest arXiv papers, build shared memory, and chat with your project knowledge base.</p>
+          </div>
+        </header>
+
+        <section class="grid two-col">
+          <div class="card">
+            <h3>New project</h3>
+            <form id="create-project-form" class="stack">
+              <input id="user-id" placeholder="User ID" value="demo_user_1" />
+              <input id="project-title" placeholder="Project title" required />
+              <textarea id="research-area" placeholder="Research area" rows="3" required></textarea>
+              <textarea id="arxiv-input" placeholder="Paste arXiv links or IDs" rows="5" required></textarea>
+              <button type="submit">Create project</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Project overview</h3>
+            <div id="project-overview" class="empty-state">Select or create a project to begin.</div>
+          </div>
+        </section>
+
+        <section class="card" id="project-workspace" style="display:none;">
+          <div class="workspace-actions">
+            <h3>Expand your project</h3>
+            <form id="add-papers-form" class="stack inline-form">
+              <textarea id="extra-arxiv-input" placeholder="Add more arXiv links or IDs" rows="3"></textarea>
+              <button type="submit">Add papers</button>
+            </form>
+          </div>
+
+          <div id="paper-list" class="paper-list"></div>
+          <div id="suggestion-list" class="paper-list"></div>
+
+          <div class="chat-card">
+            <h3>Ask your project</h3>
+            <div id="chat-log" class="chat-log"></div>
+            <form id="chat-form" class="stack inline-form">
+              <input id="chat-input" placeholder="Ask about the papers in this project" />
+              <button type="submit">Send</button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

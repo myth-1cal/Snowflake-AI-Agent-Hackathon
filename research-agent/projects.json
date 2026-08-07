@@ -10,5 +10,386 @@
     "papers": [],
     "suggestions": [],
     "status": "created"
+  },
+  {
+    "id": "2",
+    "title": "Interpretability research sprint",
+    "research_area": "sparse autoencoders for interpretability",
+    "arxiv_links": [
+      "2401.12345",
+      "2401.67890"
+    ],
+    "papers": [
+      {
+        "id": "2401.12345-1",
+        "title": "Distributionally Robust Receive Combining",
+        "authors": [
+          "Shixiong Wang",
+          "Wei Dai",
+          "Geoffrey Ye Li"
+        ],
+        "published": "2024-01-22",
+        "summary": "Here is a concise summary of the paper for your hackathon demo:\n\n**Main Claim:** \nThe paper proposes a distributionally robust receive combining framework for wireless signal estimation that handles hardware and environmental uncertainties without requiring explicit channel estimation.\n\n*   **Method:** Applies statistical machine learning to develop a robust estimation framework, utilizing both linear techniques (like diagonal loading) and nonlinear models (reproducing kernel Hilbert spaces and neural networks) to model signal and channel uncertainties.\n*   **Results:** Proves that explicit channel estimation is unnecessary, derives new uncertainty-aware estimators (e.g., kernelized diagonal loading), and mathematically demonstrates that ridge and kernel ridge regression are inherently robust against feature covariance perturbations.\n*   **Why it matters:** Enables highly reliable signal processing in next-generation Integrated Sensing and Communication (ISAC) systems by eliminating the computational overhead of channel estimation while remaining resilient to real-world hardware imperfections and limited data.",
+        "abstract": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance.",
+        "url": "http://arxiv.org/abs/2401.12345v3",
+        "raw_text": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance."
+      },
+      {
+        "id": "2506.01197v1-1",
+        "title": "Incorporating Hierarchical Semantics in Sparse Autoencoder Architectures",
+        "authors": [
+          "Mark Muchane",
+          "Sean Richardson",
+          "Kiho Park",
+          "Victor Veitch"
+        ],
+        "published": "2025-06-01",
+        "summary": "Here is a concise summary of the paper for your hackathon demo:\n\n**Main Claim**  \nThis paper introduces a modified Sparse Autoencoder (SAE) architecture that explicitly models hierarchical relationships between concepts to improve the interpretability and efficiency of large language model (LLM) representations.\n\n*   **Method:** A modified SAE design applied to LLM activations that organizes learned concepts into a structured semantic hierarchy rather than treating them as isolated features.\n*   **Results:** Successfully learns clear semantic hierarchies while simultaneously boosting reconstruction accuracy, feature interpretability, and computational efficiency.\n*   **Why it matters:** It overcomes a major limitation of traditional dictionary learning, providing a more scalable, structured, and human-understandable framework for AI interpretability and safety research.",
+        "abstract": "Sparse dictionary learning (and, in particular, sparse autoencoders) attempts to learn a set of human-understandable concepts that can explain variation on an abstract space. A basic limitation of this approach is that it neither exploits nor represents the semantic relationships between the learned concepts. In this paper, we introduce a modified SAE architecture that explicitly models a semantic hierarchy of concepts. Application of this architecture to the internal representations of large language models shows both that semantic hierarchy can be learned, and that doing so improves both reconstruction and interpretability. Additionally, the architecture leads to significant improvements in computational efficiency.",
+        "url": "http://arxiv.org/abs/2506.01197v1",
+        "raw_text": "Sparse dictionary learning (and, in particular, sparse autoencoders) attempts to learn a set of human-understandable concepts that can explain variation on an abstract space. A basic limitation of this approach is that it neither exploits nor represents the semantic relationships between the learned concepts. In this paper, we introduce a modified SAE architecture that explicitly models a semantic hierarchy of concepts. Application of this architecture to the internal representations of large language models shows both that semantic hierarchy can be learned, and that doing so improves both reconstruction and interpretability. Additionally, the architecture leads to significant improvements in computational efficiency."
+      }
+    ],
+    "suggestions": [
+      {
+        "id": "group-equivariance-meets-mechanistic-int",
+        "arxiv_id": "2511.09432v1",
+        "title": "Group Equivariance Meets Mechanistic Interpretability: Equivariant Sparse Autoencoders",
+        "authors": [
+          "Ege Erdogan",
+          "Ana Lucic"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      },
+      {
+        "id": "learning-interpretable-features-in-audio",
+        "arxiv_id": "2510.23802v1",
+        "title": "Learning Interpretable Features in Audio Latent Spaces via Sparse Autoencoders",
+        "authors": [
+          "Nathan Paek",
+          "Yongyi Zang",
+          "Qihui Yang",
+          "Randal Leistikow"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      },
+      {
+        "id": "transcoders-beat-sparse-autoencoders-for",
+        "arxiv_id": "2501.18823v2",
+        "title": "Transcoders Beat Sparse Autoencoders for Interpretability",
+        "authors": [
+          "Gon\u00e7alo Paulo",
+          "Stepan Shabalin",
+          "Nora Belrose"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      }
+    ],
+    "status": "ingested"
+  },
+  {
+    "id": "3",
+    "title": "Interpretability research sprint",
+    "research_area": "sparse autoencoders for interpretability",
+    "arxiv_links": [
+      "2401.12345",
+      "2401.67890"
+    ],
+    "papers": [
+      {
+        "id": "2401.12345-1",
+        "title": "Distributionally Robust Receive Combining",
+        "authors": [
+          "Shixiong Wang",
+          "Wei Dai",
+          "Geoffrey Ye Li"
+        ],
+        "published": "2024-01-22",
+        "summary": "**Main Claim**  \nThe paper proposes a distributionally robust receive combining framework that achieves optimal wireless signal estimation under severe channel and hardware uncertainties without requiring explicit channel estimation.\n\n*   **Method:** Applies statistical machine learning to formulate a robust signal estimation framework, extending it to non-linear function spaces (such as neural networks and Reproducing Kernel Hilbert Spaces) to handle spatially correlated signals and hardware non-idealities.\n*   **Results:** Proves that explicit channel estimation is unnecessary, unifies several existing linear combiners as special cases, and mathematically demonstrates that ridge regression methods are inherently robust to diagonal perturbations in feature covariance.\n*   **Why it matters:** Provides a resilient, hardware-agnostic signal processing solution critical for next-generation Integrated Sensing and Communication (ISAC) systems operating in highly unpredictable, real-world environments.",
+        "abstract": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance.",
+        "url": "http://arxiv.org/abs/2401.12345v3",
+        "raw_text": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance."
+      }
+    ],
+    "suggestions": [
+      {
+        "id": "incorporating-hierarchical-semantics-in-",
+        "arxiv_id": "2506.01197v1",
+        "title": "Incorporating Hierarchical Semantics in Sparse Autoencoder Architectures",
+        "authors": [
+          "Mark Muchane",
+          "Sean Richardson",
+          "Kiho Park",
+          "Victor Veitch"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      },
+      {
+        "id": "group-equivariance-meets-mechanistic-int",
+        "arxiv_id": "2511.09432v1",
+        "title": "Group Equivariance Meets Mechanistic Interpretability: Equivariant Sparse Autoencoders",
+        "authors": [
+          "Ege Erdogan",
+          "Ana Lucic"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      },
+      {
+        "id": "learning-interpretable-features-in-audio",
+        "arxiv_id": "2510.23802v1",
+        "title": "Learning Interpretable Features in Audio Latent Spaces via Sparse Autoencoders",
+        "authors": [
+          "Nathan Paek",
+          "Yongyi Zang",
+          "Qihui Yang",
+          "Randal Leistikow"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      }
+    ],
+    "status": "ingested"
+  },
+  {
+    "id": "4",
+    "title": "Interpretability research sprint",
+    "research_area": "sparse autoencoders for interpretability",
+    "arxiv_links": [
+      "2401.12345",
+      "2401.67890"
+    ],
+    "papers": [
+      {
+        "id": "2401.12345-1",
+        "title": "Distributionally Robust Receive Combining",
+        "authors": [
+          "Shixiong Wang",
+          "Wei Dai",
+          "Geoffrey Ye Li"
+        ],
+        "published": "2024-01-22",
+        "summary": "**Main Claim:** \nThe paper proposes a distributionally robust receive combining framework that performs optimal wireless signal estimation under severe channel and hardware uncertainties without requiring explicit channel estimation.\n\n**Key Highlights:**\n* **Method:** Introduces a distributionally robust optimization framework for both linear and nonlinear (kernel- and neural network-based) signal estimation to handle real-world distortions like channel noise, amplifier non-idealities, and limited pilot data.\n* **Results:** Proves that explicit channel estimation is unnecessary for optimal combining, unifies several existing combiners (like diagonal loading) as special cases, and demonstrates that standard ridge regression is inherently robust to feature covariance perturbations.\n* **Why it matters:** This framework significantly simplifies receiver design and boosts the reliability of next-generation Integrated Sensing and Communication (ISAC) systems operating in highly unpredictable environments.",
+        "abstract": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance.",
+        "url": "http://arxiv.org/abs/2401.12345v3",
+        "raw_text": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance."
+      }
+    ],
+    "suggestions": [
+      {
+        "id": "incorporating-hierarchical-semantics-in-",
+        "arxiv_id": "2506.01197v1",
+        "title": "Incorporating Hierarchical Semantics in Sparse Autoencoder Architectures",
+        "authors": [
+          "Mark Muchane",
+          "Sean Richardson",
+          "Kiho Park",
+          "Victor Veitch"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      },
+      {
+        "id": "group-equivariance-meets-mechanistic-int",
+        "arxiv_id": "2511.09432v1",
+        "title": "Group Equivariance Meets Mechanistic Interpretability: Equivariant Sparse Autoencoders",
+        "authors": [
+          "Ege Erdogan",
+          "Ana Lucic"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      },
+      {
+        "id": "learning-interpretable-features-in-audio",
+        "arxiv_id": "2510.23802v1",
+        "title": "Learning Interpretable Features in Audio Latent Spaces via Sparse Autoencoders",
+        "authors": [
+          "Nathan Paek",
+          "Yongyi Zang",
+          "Qihui Yang",
+          "Randal Leistikow"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      }
+    ],
+    "status": "ingested"
+  },
+  {
+    "id": "5",
+    "title": "Interpretability research sprint",
+    "research_area": "sparse autoencoders for interpretability",
+    "arxiv_links": [
+      "2401.12345",
+      "2401.67890"
+    ],
+    "papers": [
+      {
+        "id": "2401.12345-1",
+        "title": "Distributionally Robust Receive Combining",
+        "authors": [
+          "Shixiong Wang",
+          "Wei Dai",
+          "Geoffrey Ye Li"
+        ],
+        "published": "2024-01-22",
+        "summary": "Here is a concise summary of the paper for your hackathon demo:\n\n**Main Claim**\nThe paper proposes a distributionally robust wireless receive combining framework that eliminates the need for traditional channel estimation by successfully mitigating diverse hardware and environmental uncertainties.\n\n**Key Highlights**\n*   **Method:** Applies statistical machine learning\u2014including reproducing kernel Hilbert spaces and neural networks\u2014to design a robust estimation framework that handles spatially correlated signals, impulse noise, and limited pilot data.\n*   **Results:** Derives novel uncertainty-aware nonlinear estimators (like kernelized diagonal loading) and mathematically proves that standard machine learning techniques, such as ridge and kernel ridge regression, are inherently robust against covariance perturbations.\n*   **Why It Matters:** It simplifies wireless receiver design by bypassing the computationally heavy channel estimation step, enabling highly reliable signal processing for next-generation Integrated Sensing and Communication (ISAC) systems.",
+        "abstract": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance.",
+        "url": "http://arxiv.org/abs/2401.12345v3",
+        "raw_text": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance."
+      },
+      {
+        "id": "2506.01197v1-1",
+        "title": "Incorporating Hierarchical Semantics in Sparse Autoencoder Architectures",
+        "authors": [
+          "Mark Muchane",
+          "Sean Richardson",
+          "Kiho Park",
+          "Victor Veitch"
+        ],
+        "published": "2025-06-01",
+        "summary": "**Main Claim:**\nThis paper proposes a modified Sparse Autoencoder (SAE) architecture that explicitly models the semantic hierarchy of concepts to improve how we interpret and reconstruct the internal representations of large language models (LLMs).\n\n*   **Method:** A modified SAE architecture designed to represent learned concepts hierarchically rather than as isolated, unrelated features.\n*   **Results:** Demonstrates successful learning of semantic hierarchies in LLMs, yielding improved feature reconstruction, enhanced interpretability, and significant gains in computational efficiency.\n*   **Why it matters:** It bridges a key gap in mechanistic interpretability by mapping not just *what* features an LLM learns, but *how* those concepts relate to one another in a structured, human-understandable way.",
+        "abstract": "Sparse dictionary learning (and, in particular, sparse autoencoders) attempts to learn a set of human-understandable concepts that can explain variation on an abstract space. A basic limitation of this approach is that it neither exploits nor represents the semantic relationships between the learned concepts. In this paper, we introduce a modified SAE architecture that explicitly models a semantic hierarchy of concepts. Application of this architecture to the internal representations of large language models shows both that semantic hierarchy can be learned, and that doing so improves both reconstruction and interpretability. Additionally, the architecture leads to significant improvements in computational efficiency.",
+        "url": "http://arxiv.org/abs/2506.01197v1",
+        "raw_text": "Sparse dictionary learning (and, in particular, sparse autoencoders) attempts to learn a set of human-understandable concepts that can explain variation on an abstract space. A basic limitation of this approach is that it neither exploits nor represents the semantic relationships between the learned concepts. In this paper, we introduce a modified SAE architecture that explicitly models a semantic hierarchy of concepts. Application of this architecture to the internal representations of large language models shows both that semantic hierarchy can be learned, and that doing so improves both reconstruction and interpretability. Additionally, the architecture leads to significant improvements in computational efficiency."
+      },
+      {
+        "id": "2510.23802v1-1",
+        "title": "Learning Interpretable Features in Audio Latent Spaces via Sparse Autoencoders",
+        "authors": [
+          "Nathan Paek",
+          "Yongyi Zang",
+          "Qihui Yang",
+          "Randal Leistikow"
+        ],
+        "published": "2025-10-27",
+        "summary": "**Main Claim:** \nThis paper introduces a framework that uses Sparse Autoencoders (SAEs) to map the latent representations of audio generative models to human-interpretable acoustic properties, enabling both the analysis and controllable manipulation of AI-generated music.\n\n*   **Method:** The researchers train SAEs on both continuous and discrete audio latent spaces (such as DiffRhythm-VAE, EnCodec, and WavTokenizer) and learn linear mappings from these SAE features to specific acoustic properties (pitch, amplitude, and timbre).\n*   **Results:** The approach successfully demonstrates precise, controllable audio manipulation and reveals how key musical elements evolve step-by-step during the generation process of a state-of-the-art text-to-music model (DiffRhythm).\n*   **Why It Matters:** It overcomes the challenge of interpreting dense, complex audio data\u2014providing a practical way to peer inside and steer AI music generation, with a framework that can be extended to other modalities like visual generation.",
+        "abstract": "While sparse autoencoders (SAEs) successfully extract interpretable features from language models, applying them to audio generation faces unique challenges: audio's dense nature requires compression that obscures semantic meaning, and automatic feature characterization remains limited. We propose a framework for interpreting audio generative models by mapping their latent representations to human-interpretable acoustic concepts. We train SAEs on audio autoencoder latents, then learn linear mappings from SAE features to discretized acoustic properties (pitch, amplitude, and timbre). This enables both controllable manipulation and analysis of the AI music generation process, revealing how acoustic properties emerge during synthesis. We validate our approach on continuous (DiffRhythm-VAE) and discrete (EnCodec, WavTokenizer) audio latent spaces, and analyze DiffRhythm, a state-of-the-art text-to-music model, to demonstrate how pitch, timbre, and loudness evolve throughout generation. While our work is only done on audio modality, our framework can be extended to interpretable analysis of visual latent space generation models.",
+        "url": "http://arxiv.org/abs/2510.23802v1",
+        "raw_text": "While sparse autoencoders (SAEs) successfully extract interpretable features from language models, applying them to audio generation faces unique challenges: audio's dense nature requires compression that obscures semantic meaning, and automatic feature characterization remains limited. We propose a framework for interpreting audio generative models by mapping their latent representations to human-interpretable acoustic concepts. We train SAEs on audio autoencoder latents, then learn linear mappings from SAE features to discretized acoustic properties (pitch, amplitude, and timbre). This enables both controllable manipulation and analysis of the AI music generation process, revealing how acoustic properties emerge during synthesis. We validate our approach on continuous (DiffRhythm-VAE) and discrete (EnCodec, WavTokenizer) audio latent spaces, and analyze DiffRhythm, a state-of-the-art text-to-music model, to demonstrate how pitch, timbre, and loudness evolve throughout generation. While our work is only done on audio modality, our framework can be extended to interpretable analysis of visual latent space generation models."
+      }
+    ],
+    "suggestions": [
+      {
+        "id": "group-equivariance-meets-mechanistic-int",
+        "arxiv_id": "2511.09432v1",
+        "title": "Group Equivariance Meets Mechanistic Interpretability: Equivariant Sparse Autoencoders",
+        "authors": [
+          "Ege Erdogan",
+          "Ana Lucic"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      },
+      {
+        "id": "transcoders-beat-sparse-autoencoders-for",
+        "arxiv_id": "2501.18823v2",
+        "title": "Transcoders Beat Sparse Autoencoders for Interpretability",
+        "authors": [
+          "Gon\u00e7alo Paulo",
+          "Stepan Shabalin",
+          "Nora Belrose"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      },
+      {
+        "id": "rational-sparse-autoencoder",
+        "arxiv_id": "2606.14990v2",
+        "title": "Rational Sparse Autoencoder",
+        "authors": [
+          "Naiyu Yin",
+          "Yue Yu"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      }
+    ],
+    "status": "ingested"
+  },
+  {
+    "id": "6",
+    "title": "Interpretability research sprint",
+    "research_area": "sparse autoencoders for interpretability",
+    "arxiv_links": [
+      "2401.12345",
+      "2401.67890"
+    ],
+    "papers": [
+      {
+        "id": "2401.12345-1",
+        "title": "Distributionally Robust Receive Combining",
+        "authors": [
+          "Shixiong Wang",
+          "Wei Dai",
+          "Geoffrey Ye Li"
+        ],
+        "published": "2024-01-22",
+        "summary": "**Main Claim**  \nThis paper proposes a distributionally robust receive combining framework for wireless systems that mitigates hardware and channel uncertainties without requiring explicit channel estimation.\n\n*   **Method:** The authors apply statistical machine learning to design a robust estimation framework, extending both linear combining methods and nonlinear estimators (using neural networks and reproducing kernel Hilbert spaces) to handle signal, noise, and hardware non-idealities.\n*   **Results:** The framework unifies several existing combiners (like diagonal loading), derives new uncertainty-aware nonlinear estimators, and mathematically proves that ridge and kernel ridge regression are inherently robust against diagonal covariance perturbations.\n*   **Why it matters:** It reveals that traditional channel estimation is not necessary for optimal signal recovery, paving the way for simpler, highly resilient receiver designs in next-generation Integrated Sensing and Communication (ISAC) systems.",
+        "abstract": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance.",
+        "url": "http://arxiv.org/abs/2401.12345v3",
+        "raw_text": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance."
+      },
+      {
+        "id": "2510.23802v1-1",
+        "title": "Learning Interpretable Features in Audio Latent Spaces via Sparse Autoencoders",
+        "authors": [
+          "Nathan Paek",
+          "Yongyi Zang",
+          "Qihui Yang",
+          "Randal Leistikow"
+        ],
+        "published": "2025-10-27",
+        "summary": "**Main Claim**  \nThis paper introduces a framework that uses Sparse Autoencoders (SAEs) to map the latent representations of audio generative models to human-interpretable acoustic concepts, enabling both controllable music manipulation and detailed generation analysis.\n\n**Key Takeaways**  \n* **Method:** The authors trained SAEs on both continuous and discrete audio latent spaces (DiffRhythm-VAE, EnCodec, and WavTokenizer) and learned linear mappings from SAE features to discretized acoustic properties like pitch, amplitude, and timbre.\n* **Results:** The approach successfully enabled controllable audio manipulation and revealed how key acoustic properties emerge and evolve throughout the text-to-music generation process in state-of-the-art models like DiffRhythm.\n* **Why it matters:** It overcomes the challenge of interpreting dense, highly compressed audio data, providing a foundation for more controllable creative AI tools and a framework that can be extended to other generative modalities like vision.",
+        "abstract": "While sparse autoencoders (SAEs) successfully extract interpretable features from language models, applying them to audio generation faces unique challenges: audio's dense nature requires compression that obscures semantic meaning, and automatic feature characterization remains limited. We propose a framework for interpreting audio generative models by mapping their latent representations to human-interpretable acoustic concepts. We train SAEs on audio autoencoder latents, then learn linear mappings from SAE features to discretized acoustic properties (pitch, amplitude, and timbre). This enables both controllable manipulation and analysis of the AI music generation process, revealing how acoustic properties emerge during synthesis. We validate our approach on continuous (DiffRhythm-VAE) and discrete (EnCodec, WavTokenizer) audio latent spaces, and analyze DiffRhythm, a state-of-the-art text-to-music model, to demonstrate how pitch, timbre, and loudness evolve throughout generation. While our work is only done on audio modality, our framework can be extended to interpretable analysis of visual latent space generation models.",
+        "url": "http://arxiv.org/abs/2510.23802v1",
+        "raw_text": "While sparse autoencoders (SAEs) successfully extract interpretable features from language models, applying them to audio generation faces unique challenges: audio's dense nature requires compression that obscures semantic meaning, and automatic feature characterization remains limited. We propose a framework for interpreting audio generative models by mapping their latent representations to human-interpretable acoustic concepts. We train SAEs on audio autoencoder latents, then learn linear mappings from SAE features to discretized acoustic properties (pitch, amplitude, and timbre). This enables both controllable manipulation and analysis of the AI music generation process, revealing how acoustic properties emerge during synthesis. We validate our approach on continuous (DiffRhythm-VAE) and discrete (EnCodec, WavTokenizer) audio latent spaces, and analyze DiffRhythm, a state-of-the-art text-to-music model, to demonstrate how pitch, timbre, and loudness evolve throughout generation. While our work is only done on audio modality, our framework can be extended to interpretable analysis of visual latent space generation models."
+      },
+      {
+        "id": "2501.18823v2-1",
+        "title": "Transcoders Beat Sparse Autoencoders for Interpretability",
+        "authors": [
+          "Gon\u00e7alo Paulo",
+          "Stepan Shabalin",
+          "Nora Belrose"
+        ],
+        "published": "2025-01-31",
+        "summary": "**Main Claim:** \nThis paper demonstrates that transcoders extract significantly more interpretable neural network features than sparse autoencoders (SAEs), and introduces an improved \"skip transcoder\" architecture that reduces reconstruction loss.\n\n*   **Method:** The authors compare traditional SAEs against transcoders\u2014which reconstruct a network component's output directly from its input\u2014and introduce \"skip transcoders\" by adding an affine skip connection to the architecture.\n*   **Results:** Transcoders find substantially more interpretable features than SAEs, while the newly proposed skip transcoders achieve lower reconstruction error with zero compromise on feature interpretability.\n*   **Why it matters:** This provides a superior, more efficient toolkit for mechanistic interpretability, making it easier for researchers to reverse-engineer and audit the inner workings of deep neural networks.",
+        "abstract": "Sparse autoencoders (SAEs) extract human-interpretable features from deep neural networks by transforming their activations into a sparse, higher dimensional latent space, and then reconstructing the activations from these latents. Transcoders are similar to SAEs, but they are trained to reconstruct the output of a component of a deep network given its input. In this work, we compare the features found by transcoders and SAEs trained on the same model and data, finding that transcoder features are significantly more interpretable. We also propose skip transcoders, which add an affine skip connection to the transcoder architecture, and show that these achieve lower reconstruction loss with no effect on interpretability.",
+        "url": "http://arxiv.org/abs/2501.18823v2",
+        "raw_text": "Sparse autoencoders (SAEs) extract human-interpretable features from deep neural networks by transforming their activations into a sparse, higher dimensional latent space, and then reconstructing the activations from these latents. Transcoders are similar to SAEs, but they are trained to reconstruct the output of a component of a deep network given its input. In this work, we compare the features found by transcoders and SAEs trained on the same model and data, finding that transcoder features are significantly more interpretable. We also propose skip transcoders, which add an affine skip connection to the transcoder architecture, and show that these achieve lower reconstruction loss with no effect on interpretability."
+      },
+      {
+        "id": "2511.09432v1-1",
+        "title": "Group Equivariance Meets Mechanistic Interpretability: Equivariant Sparse Autoencoders",
+        "authors": [
+          "Ege Erdogan",
+          "Ana Lucic"
+        ],
+        "published": "2025-11-12",
+        "summary": "**Main Claim:** \nIncorporating group symmetries into Sparse Autoencoders (SAEs) creates adaptively equivariant features that significantly improve model interpretability and downstream task performance in non-language domains.\n\n*   **Method:** The authors developed **adaptively equivariant SAEs** that use a single matrix to capture how activations transform under image rotations, allowing the SAE to dynamically match the base model's level of symmetry.\n*   **Results:** The adaptive SAEs successfully discovered higher-quality features on synthetic image datasets, achieving **superior probing performance** compared to standard SAEs.\n*   **Why it matters:** This work expands the scope of mechanistic interpretability tools beyond text, making them viable for scientific and visual data where physical symmetries (like rotation) are critical.",
+        "abstract": "Sparse autoencoders (SAEs) have proven useful in disentangling the opaque activations of neural networks, primarily large language models, into sets of interpretable features. However, adapting them to domains beyond language, such as scientific data with group symmetries, introduces challenges that can hinder their effectiveness. We show that incorporating such group symmetries into the SAEs yields features more useful in downstream tasks. More specifically, we train autoencoders on synthetic images and find that a single matrix can explain how their activations transform as the images are rotated. Building on this, we develop adaptively equivariant SAEs that can adapt to the base model's level of equivariance. These adaptive SAEs discover features that lead to superior probing performance compared to regular SAEs, demonstrating the value of incorporating symmetries in mechanistic interpretability tools.",
+        "url": "http://arxiv.org/abs/2511.09432v1",
+        "raw_text": "Sparse autoencoders (SAEs) have proven useful in disentangling the opaque activations of neural networks, primarily large language models, into sets of interpretable features. However, adapting them to domains beyond language, such as scientific data with group symmetries, introduces challenges that can hinder their effectiveness. We show that incorporating such group symmetries into the SAEs yields features more useful in downstream tasks. More specifically, we train autoencoders on synthetic images and find that a single matrix can explain how their activations transform as the images are rotated. Building on this, we develop adaptively equivariant SAEs that can adapt to the base model's level of equivariance. These adaptive SAEs discover features that lead to superior probing performance compared to regular SAEs, demonstrating the value of incorporating symmetries in mechanistic interpretability tools."
+      }
+    ],
+    "suggestions": [
+      {
+        "id": "incorporating-hierarchical-semantics-in-",
+        "arxiv_id": "2506.01197v1",
+        "title": "Incorporating Hierarchical Semantics in Sparse Autoencoder Architectures",
+        "authors": [
+          "Mark Muchane",
+          "Sean Richardson",
+          "Kiho Park",
+          "Victor Veitch"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      },
+      {
+        "id": "rational-sparse-autoencoder",
+        "arxiv_id": "2606.14990v2",
+        "title": "Rational Sparse Autoencoder",
+        "authors": [
+          "Naiyu Yin",
+          "Yue Yu"
+        ],
+        "reason": "Relevant to sparse autoencoders for interpretability"
+      }
+    ],
+    "status": "ingested"
   }
 ]

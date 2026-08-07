@@ -15,48 +15,86 @@ if "agent" not in st.session_state:
     st.session_state.analytics_client = SnowflakeClient()
     st.session_state.project_store = ProjectStore()
 
-st.title("📚 Research Memory Assistant")
-st.markdown("### A project-based research workspace for ingesting arXiv papers into EverOS memory.")
+st.markdown("""
+<div style="background: linear-gradient(90deg, #111827 0%, #1f2937 100%); padding: 1.2rem 1.4rem; border-radius: 16px; margin-bottom: 1rem;">
+    <h1 style="color: white; margin: 0 0 0.3rem 0; font-size: 1.8rem;">SmartScholar</h1>
+    </div>
+""", unsafe_allow_html=True)
 
-tabs = st.tabs(["🧠 Project Workspace", "⚡ Token Economy Comparison", "📊 Snowflake Token Analytics Dashboard"])
+st.markdown("---")
 
-with tabs[0]:
-    st.subheader("Project Setup")
-    user_id = st.text_input("User ID", value="demo_user_1")
-    project_title = st.text_input("Project title", value="Interpretability research sprint")
-    research_area = st.text_area("Research area", value="sparse autoencoders for interpretability", height=80)
-    arxiv_input = st.text_area("arXiv links or IDs", value="https://arxiv.org/abs/2401.12345\n2401.67890", height=100)
+if "active_tab" not in st.session_state:
+    st.session_state.active_tab = "workspace"
 
-    if st.button("Create Project & Ingest Papers"):
-        if not project_title.strip() or not research_area.strip() or not arxiv_input.strip():
-            st.warning("Please provide a title, research area, and at least one arXiv link or ID.")
-        else:
-            parsed_links = st.session_state.project_store.parse_arxiv_links(arxiv_input)
-            if not parsed_links:
-                st.warning("Could not parse any arXiv IDs from the input.")
+nav_col, info_col = st.columns([2, 1])
+with nav_col:
+    selected = st.radio("", ["Workspace", "Analytics"], horizontal=True, key="nav")
+with info_col:
+    st.caption("Memory-first research assistant")
+
+if selected == "Workspace":
+    st.session_state.active_tab = "workspace"
+else:
+    st.session_state.active_tab = "analytics"
+
+if st.session_state.active_tab == "workspace":
+    st.subheader("Project Workspace")
+    left, right = st.columns([1.1, 0.9])
+
+    with left:
+        st.markdown("### New project")
+        user_id = st.text_input("User ID", value="demo_user_1")
+        project_title = st.text_input("Project title", value="Interpretability research sprint")
+        research_area = st.text_area("Research area", value="sparse autoencoders for interpretability", height=80)
+        arxiv_input = st.text_area("arXiv links or IDs", value="https://arxiv.org/abs/2401.12345\n2401.67890", height=110)
+
+        if st.button("Create Project & Ingest Papers", use_container_width=True):
+            if not project_title.strip() or not research_area.strip() or not arxiv_input.strip():
+                st.warning("Please provide a title, research area, and at least one arXiv link or ID.")
             else:
-                project = st.session_state.project_store.create_project(project_title, research_area, parsed_links)
-                st.session_state.current_project_id = project["id"]
-                st.session_state.current_project = project
-                st.success(f"Project created: {project['title']}")
+                parsed_links = st.session_state.project_store.parse_arxiv_links(arxiv_input)
+                if not parsed_links:
+                    st.warning("Could not parse any arXiv IDs from the input.")
+                else:
+                    project = st.session_state.project_store.create_project(project_title, research_area, parsed_links)
+                    st.session_state.current_project_id = project["id"]
+                    st.session_state.current_project = project
+                    st.success(f"Project created: {project['title']}")
 
-                with st.spinner("Ingesting papers into memory..."):
-                    ingest_result = st.session_state.agent.ingest_project_papers(
-                        project_id=project["id"],
-                        arxiv_ids=parsed_links,
-                        research_area=research_area,
-                        user_id=user_id,
-                    )
+                    with st.spinner("Ingesting papers into memory..."):
+                        ingest_result = st.session_state.agent.ingest_project_papers(
+                            project_id=project["id"],
+                            arxiv_ids=parsed_links,
+                            research_area=research_area,
+                            user_id=user_id,
+                        )
 
-                st.session_state.current_project = ingest_result.get("project", project)
-                st.session_state.project_store.update_project(project["id"], **st.session_state.current_project)
+                    st.session_state.current_project = ingest_result.get("project", project)
+                    st.session_state.project_store.update_project(project["id"], **st.session_state.current_project)
 
-                if ingest_result.get("errors"):
-                    st.warning("Some papers could not be ingested:")
-                    for error in ingest_result["errors"]:
-                        st.caption(error)
+                    if ingest_result.get("errors"):
+                        st.warning("Some papers could not be ingested:")
+                        for error in ingest_result["errors"]:
+                            st.caption(error)
 
-                st.session_state.project_ready = True
+                    st.session_state.project_ready = True
+
+    with right:
+        st.markdown("### Project overview")
+        if st.session_state.get("current_project"):
+            project = st.session_state.current_project
+            st.markdown(f"**{project.get('title', 'Project')}**")
+            st.caption(f"Research area: {project.get('research_area', '')}")
+            st.caption(f"Papers ingested: {len(project.get('papers', []))}")
+            st.info("Use this workspace to add papers, explore summaries, and chat with the project knowledge base.")
+        else:
+            st.info("Create a project on the left to start building your research memory.")
+
+            projects = st.session_state.project_store.load_projects()
+            if projects:
+                st.markdown("### Recent projects")
+                for project in projects[-3:]:
+                    st.markdown(f"- **{project.get('title', 'Untitled')}** — {project.get('research_area', '')}")
 
     if st.session_state.get("current_project"):
         project = st.session_state.current_project
@@ -64,16 +102,39 @@ with tabs[0]:
         st.subheader(f"{project.get('title', 'Project')}")
         st.caption(f"Research area: {project.get('research_area', '')}")
 
+        with st.expander("➕ Add more arXiv papers", expanded=False):
+            extra_links = st.text_area("Add more arXiv links or IDs", value="", height=80, key="extra_links")
+            if st.button("Add Papers to Project", use_container_width=True):
+                if not extra_links.strip():
+                    st.warning("Please enter at least one arXiv link or ID.")
+                else:
+                    parsed_links = st.session_state.project_store.parse_arxiv_links(extra_links)
+                    if not parsed_links:
+                        st.warning("Could not parse any arXiv IDs from the input.")
+                    else:
+                        with st.spinner("Adding papers to the project..."):
+                            updated = st.session_state.agent.ingest_project_papers(
+                                project_id=project["id"],
+                                arxiv_ids=parsed_links,
+                                research_area=project.get("research_area", ""),
+                                user_id=user_id,
+                            )
+                        st.session_state.current_project = updated.get("project", project)
+                        st.session_state.project_store.update_project(project["id"], **st.session_state.current_project)
+                        st.rerun()
+
         if project.get("papers"):
             st.markdown("### Ingested Papers")
             for paper in project["papers"]:
-                with st.expander(f"📄 {paper.get('title','Untitled')}", expanded=False):
-                    st.write(f"**Authors:** {', '.join(paper.get('authors', []))}")
-                    st.write(f"**Published:** {paper.get('published', 'Unknown')}")
-                    st.write(f"**Summary:** {paper.get('summary', '')}")
-                    st.write(f"**arXiv:** {paper.get('url', '')}")
+                with st.container():
+                    st.markdown(f"#### {paper.get('title','Untitled')}")
+                    st.caption(f"Authors: {', '.join(paper.get('authors', []))} • Published: {paper.get('published', 'Unknown')}")
+                    st.write(paper.get('summary', ''))
                     if paper.get("abstract"):
-                        st.write(f"**Abstract:** {paper['abstract']}")
+                        with st.expander("Show abstract"):
+                            st.write(paper["abstract"])
+                    st.markdown(f"[Open arXiv]({paper.get('url', '#')})")
+                    st.markdown("---")
 
         if project.get("suggestions"):
             st.markdown("### Suggested Related Papers")
@@ -84,7 +145,7 @@ with tabs[0]:
                     st.write(f"{suggestion.get('authors', [])}")
                     st.write(suggestion.get('reason', ''))
                 with col2:
-                    if st.button("Add", key=f"add_{suggestion.get('id', '')}"):
+                    if st.button("Add", key=f"add_{suggestion.get('id', '')}", use_container_width=True):
                         with st.spinner("Adding suggested paper..."):
                             updated = st.session_state.agent.add_related_paper_to_project(
                                 project_id=project["id"],
@@ -93,45 +154,42 @@ with tabs[0]:
                             )
                         st.session_state.current_project = updated
                         st.session_state.project_store.update_project(project["id"], **updated)
-                        st.experimental_rerun()
+                        st.rerun()
+
+        if project.get("papers"):
+            st.markdown("---")
+            st.subheader("💬 Chat with your knowledge base")
+            if "kb_messages" not in st.session_state:
+                st.session_state.kb_messages = []
+
+            chat_box = st.container()
+            with chat_box:
+                for message in st.session_state.kb_messages:
+                    with st.chat_message(message["role"]):
+                        st.write(message["content"])
+
+                prompt = st.chat_input("Ask about the papers in this project")
+            if prompt:
+                st.session_state.kb_messages.append({"role": "user", "content": prompt})
+                with st.chat_message("user"):
+                    st.write(prompt)
+
+                with st.spinner("Searching your knowledge base..."):
+                    response = st.session_state.agent.chat_with_project_knowledge(
+                        project=project,
+                        user_query=prompt,
+                        user_id=user_id,
+                    )
+
+                st.session_state.kb_messages.append({"role": "assistant", "content": response})
+                with st.chat_message("assistant"):
+                    st.write(response)
+                    st.rerun()
 
         if not project.get("papers"):
             st.info("Create a project and ingest papers to start building the project memory.")
 
-with tabs[1]:
-    st.subheader("Token Economy Comparison")
-    compare_query = st.text_area("Comparison query", value="What are the best techniques for reducing transformer inference costs?", height=120)
-    compare_user_id = st.text_input("Comparison User ID", value="demo_user_1", key="compare_user_id")
-
-    if st.button("Run Side-by-Side Comparison"):
-        with st.spinner("Comparing baseline and memory-enabled modes..."):
-            compare_result = st.session_state.agent.compare_modes(compare_query, user_id=compare_user_id)
-
-        if compare_result.get("baseline", {}).get("error") or compare_result.get("memory", {}).get("error"):
-            st.error("Comparison could not complete fully. The agent still returned a response, but one of the runs failed.")
-            if compare_result.get("baseline", {}).get("error"):
-                st.caption(f"Baseline error: {compare_result['baseline']['error']}")
-            if compare_result.get("memory", {}).get("error"):
-                st.caption(f"Memory error: {compare_result['memory']['error']}")
-        else:
-            left, right = st.columns(2)
-            with left:
-                st.markdown("### Baseline Agent (No Memory)")
-                st.metric("Total Tokens", compare_result["baseline"]["usage"].get("total_tokens", 0))
-                st.metric("Latency", f"{compare_result['baseline'].get('latency_ms', 0.0):.0f} ms")
-                st.metric("Estimated Cost", format_usd(compare_result["baseline"].get("cost_usd", 0.0)))
-            with right:
-                st.markdown("### EverOS Memory Agent")
-                st.metric("Total Tokens", compare_result["memory"]["usage"].get("total_tokens", 0))
-                st.metric("Latency", f"{compare_result['memory'].get('latency_ms', 0.0):.0f} ms")
-                st.metric("Estimated Cost", format_usd(compare_result["memory"].get("cost_usd", 0.0)))
-
-            st.markdown("### Savings")
-            savings_col1, savings_col2 = st.columns(2)
-            savings_col1.metric("Token Savings", f"{compare_result.get('token_savings_pct', 0.0):.1f}%")
-            savings_col2.metric("USD Cost Savings", format_usd(compare_result.get('cost_savings_usd', 0.0)))
-
-with tabs[2]:
+else:
     st.subheader("Snowflake Token Analytics Dashboard")
     analytics = st.session_state.analytics_client.get_comparison_analytics()
 
