@@ -30,7 +30,7 @@ nav_col, info_col = st.columns([2, 1])
 with nav_col:
     selected = st.radio("", ["Workspace", "Analytics"], horizontal=True, key="nav")
 with info_col:
-    st.caption("Memory-first research assistant")
+    st.caption("Research memory")
 
 if selected == "Workspace":
     st.session_state.active_tab = "workspace"
@@ -89,12 +89,6 @@ if st.session_state.active_tab == "workspace":
             st.info("Use this workspace to add papers, explore summaries, and chat with the project knowledge base.")
         else:
             st.info("Create a project on the left to start building your research memory.")
-
-            projects = st.session_state.project_store.load_projects()
-            if projects:
-                st.markdown("### Recent projects")
-                for project in projects[-3:]:
-                    st.markdown(f"- **{project.get('title', 'Untitled')}** — {project.get('research_area', '')}")
 
     if st.session_state.get("current_project"):
         project = st.session_state.current_project
